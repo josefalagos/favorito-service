@@ -6,9 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 @RestController
 @RequestMapping("/favorito")
+@Tag(name = "Favoritos", description = "API para la gestión de productos favoritos de Amazorg")
 public class FavoritoController {
     @Autowired
     private FavoritoService favoritoService;
@@ -27,6 +31,8 @@ public class FavoritoController {
                 return ResponseEntity.notFound().build();
             }
     }
+    @Operation(summary = "Agregar un producto a favoritos", description = "Recibe los datos del producto y lo almacena en la base de datos relacional.")
+@ApiResponse(responseCode = "201", description = "Producto agregado a favoritos exitosamente")
     @PostMapping
     public Favorito crear(@RequestBody Favorito favorito){
         return favoritoService.guardar(favorito);
